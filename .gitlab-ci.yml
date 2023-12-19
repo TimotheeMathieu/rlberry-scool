@@ -1,0 +1,17 @@
+image: python:3.10
+tests:
+  stage: test
+  tags:
+        - ci.inria.fr
+        - small 
+  script:
+    - pip install .
+    - pip install pytest
+    - echo "Executing unit tests..."
+    - pytest .
+    - echo "Executing notebooks"
+    - pip install jupyter nbconvert
+    - jupyter nbconvert --to python tutorials/*.ipynb
+    - for file in tutorials/*.py; do python $file; done
+    
+
